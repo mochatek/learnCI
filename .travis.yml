@@ -13,11 +13,16 @@ install:
 script:
   - pyinstaller --onefile main.py
   - dist/main.exe
-  - python test.py
+  # - python test.py
+before_deploy:
+  - git config --local user.name "mochatek"
+  - git config --local user.email "akashsabu@ymail.com"
+  - COMMIT_MESSAGE=$(git log --format=%B -1)
+  - VERSION=${COMMIT_MESSAGE##*:}
+  - export TRAVIS_TAG=${VERSION}
+  - git tag $TRAVIS_TAG
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file: "dist/main.exe"
   skip_cleanup: true
-  on:
-    tags: true

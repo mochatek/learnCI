@@ -1,11 +1,13 @@
 import unittest
-from os import path, getcwd
+from os import path, getcwd, listdir
 
 
 class TestPackage(unittest.TestCase):
     def test_build(self):
         ROOT = getcwd()
         print(ROOT)
+        print(listdir(ROOT))
+        print(listdir(path.join(ROOT, 'dist')))
         # Log file will be created if app ran
         log_path = path.join(ROOT, 'dist', 'error.log')
         print(log_path)

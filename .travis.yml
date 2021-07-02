@@ -1,42 +1,4 @@
 ---
-# language: python
-# python:
-#   - "3.8"
-# cache: pip
-# install:
-#   - pip install -r requirements.txt
-# script:
-#   - pyinstaller --onefile main.py
-# before_deploy:
-#   - ls dist
-# deploy:
-#   provider: releases
-#   api_key: $GITHUB_TOKEN
-#   file: "dist/main"
-#   skip_cleanup: true
-#   on:
-#     tags: true # Releases deployment will trigger if and only if the build is a tagged build.
-
-# os: windows
-# language: shell
-# before_install:
-#   - choco install python --version 3.8.0
-#   - python -m pip install --upgrade pip
-# env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
-# install:
-#   - pip install -r requirements.txt
-# script:
-#   - pyinstaller --onefile main.py
-# before_deploy:
-#   - ls dist
-# deploy:
-#   provider: releases
-#   api_key: $GITHUB_TOKEN
-#   file: "dist/main.exe"
-#   skip_cleanup: true
-#   on:
-#     tags: true
-
 os: windows
 language: shell
 branches:
@@ -48,23 +10,14 @@ before_install:
 env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
 install:
   - pip install -r requirements.txt
-jobs:
-  include:
-    - stage: build
-      name: "Bundle the app to exe"
-      script: pyinstaller --onefile main.py
-    - stage: test
-      name: 'Run the exe and check for any error'
-      script:
-        - dist/main.exe
-        - python test.py
-    - stage: deploy
-      name: 'Deploy the exe through GitHub release'
-      script: skip
-      deploy:
-        provider: releases
-        api_key: $GITHUB_TOKEN
-        file: "dist/main.exe"
-        skip_cleanup: true
-        on:
-          tags: true
+script:
+  - pyinstaller --onefile main.py
+  - dist/main.exe
+  - python test.py
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file: "dist/main.exe"
+  skip_cleanup: true
+  on:
+    tags: true

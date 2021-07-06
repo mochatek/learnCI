@@ -14,7 +14,7 @@ if __name__ == '__main__':
     logging.basicConfig(filename='error.log', filemode='w',
                         format='%(name)s: %(levelname)s %(message)s', level=logging.ERROR)
 
-    print('AGE PREDICTOR'.center(30))
+    print('AGE PREDICTOR -new'.center(30))
     print('-'*30)
 
     name = 'Mocha'
